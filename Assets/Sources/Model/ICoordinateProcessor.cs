@@ -5,8 +5,8 @@ namespace Clicker.Model
 {
     internal interface ICoordinateProcessor
     {
-        public Vector2 TransformCoordinates(Vector2 playerChipPosition, float speed);
-        public bool CoordinatesAreWithinTiles(Vector2 playerChipPosition, IEnumerable<Vector2> tilePositions);
-        bool PlayerChipCollisionWithOtherObject(Vector2 playerChipPosition, Vector2 crystalInstance);
+        public Vector3 TransformCoordinates(Vector3 playerChipPosition, float speed);
+        public bool CoordinatesAreWithinTiles(Vector3 playerChipPosition, IEnumerable<Vector3> tilePositions);
+        bool PlayerChipCollisionWithOtherObject(Vector3 playerChipPosition, Vector3 crystalInstance);
     }
 }

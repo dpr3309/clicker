@@ -5,10 +5,11 @@ namespace Clicker.Model
     internal class PlayerChipModel : IPlayerChipModel
     {
         public float Speed { get; }
-        public Vector2 Position { get; }
-        public void UpdatePosition(Vector2 newPosition)
+        public Vector3 Position { get; private set; }
+
+        public void UpdatePosition(Vector3 newPosition)
         {
-            throw new System.NotImplementedException();
+            Position = newPosition;
         }
     }
 }

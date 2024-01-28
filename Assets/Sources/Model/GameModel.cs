@@ -4,11 +4,6 @@ using Zenject;
 
 namespace Clicker.Model
 {
-    public interface IGameModel
-    {
-        public void Update();
-    }
-
     public class GameModel : IGameModel
     {
         private readonly IPlayerChipModel _playerChipModel;
@@ -28,13 +23,13 @@ namespace Clicker.Model
 
         public void Update()
         {
-            Vector2 newPlayerPosition =
+            Vector3 newPlayerPosition =
                 _coordinateProcessor.TransformCoordinates(_playerChipModel.Position, _playerChipModel.Speed);
             _playerChipModel.UpdatePosition(newPlayerPosition);
             ProcessPlayerPosition(_playerChipModel.Position);
         }
 
-        private void ProcessPlayerPosition(Vector2 playerChipPosition)
+        private void ProcessPlayerPosition(Vector3 playerChipPosition)
         {
             if (_coordinateProcessor.CoordinatesAreWithinTiles(playerChipPosition, _fieldModel.TileInstances))
             {

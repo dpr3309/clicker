@@ -5,9 +5,9 @@ namespace Clicker.Model
 {
     internal class FieldModel : IFieldModel
     {
-        public IReadOnlyList<Vector2> TileInstances { get; }
+        public IReadOnlyList<Vector3> TileInstances { get; private set; }
 
-        public void ReleaseTraversedObjects(Vector2 playerChipPosition)
+        public void ReleaseTraversedObjects(Vector3 playerChipPosition)
         {
             throw new System.NotImplementedException();
         }
@@ -17,7 +17,7 @@ namespace Clicker.Model
             throw new System.NotImplementedException();
         }
 
-        public void ProcessPlayerPosition(Vector2 playerChipPosition)
+        public void ProcessPlayerPosition(Vector3 playerChipPosition)
         {
             ReleaseTraversedObjects(playerChipPosition);
             CheckTilesCount();
