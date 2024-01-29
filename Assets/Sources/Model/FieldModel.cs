@@ -11,6 +11,9 @@ namespace Clicker.Model
         public IReadOnlyReactiveCollection<Vector3> TileInstances => _tileInstances;
         private ITilePositionGenerator _positionGenerator;
 
+        // todo: move it to context!
+        private const int MIN_TILES_COUNT = 30;
+
         public FieldModel(ITilePositionGenerator positionGenerator)
         {
             _positionGenerator = positionGenerator;
@@ -20,7 +23,6 @@ namespace Clicker.Model
         {
             var tilesPositions = _positionGenerator.GenerateLaunchPadPositions().ToList().AsReadOnly();
             _tileInstances.AddRange(tilesPositions);
-            Debug.Log($"_tileInstances count: {_tileInstances.Count}");
             CheckTilesCount();
         }
 
@@ -32,7 +34,17 @@ namespace Clicker.Model
 
         public void CheckTilesCount()
         {
-            throw new System.NotImplementedException();
+            if (_tileInstances.Count < MIN_TILES_COUNT)
+            {
+                GenerationTiles();
+                CheckTilesCount();
+            }
+        }
+
+        private void GenerationTiles()
+        {
+            var tilesPositions = _positionGenerator.GeneratePositions();
+            _tileInstances.AddRange(tilesPositions);
         }
 
         public void ProcessPlayerPosition(Vector3 playerChipPosition)

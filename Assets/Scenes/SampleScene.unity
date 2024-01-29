@@ -212,6 +212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f13a58832064fbc8854499049c1f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coordinateModifierTypes: 0000000001000000
+  launchPadSize: {x: 3, y: 3}
+  difficaltyLevel: 0
 --- !u!114 &458493499
 MonoBehaviour:
   m_ObjectHideFlags: 0
