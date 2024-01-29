@@ -13,6 +13,13 @@ namespace Clicker.Installers
         private List<CoordinateModifierTypes> coordinateModifierTypes =
             new List<CoordinateModifierTypes>() { CoordinateModifierTypes.Forward, CoordinateModifierTypes.Right };
 
+        [SerializeField]
+        private Vector2Int launchPadSize = Vector2Int.one;
+
+        [SerializeField]
+        private DifficultyLevel difficaltyLevel = (DifficultyLevel)(-1);
+
+
         private GameSettings settings = new GameSettings(TileType.Square, 1, PlayerChipType.Circle, 0.5f);
 
         public override void InstallBindings()
@@ -20,6 +27,8 @@ namespace Clicker.Installers
             InstallPlayerChipCoordinateProcessor(settings.PlayerChipType, settings.PlayerChipRadius);
             InstallTileCoordinateProcessor(settings.TileType, settings.TileSize);
             InstallCoordinateModifierManager(coordinateModifierTypes);
+
+            InstallTilePositionGenerator(settings.TileType, settings.TileSize, difficaltyLevel, launchPadSize);
 
             Container.BindInterfacesTo<CoordinateProcessor>().AsSingle();
             Container.BindInterfacesTo<FieldModel>().AsSingle();
@@ -85,6 +94,27 @@ namespace Clicker.Installers
 
             Container.BindInterfacesTo<MainCoordinateModifierManager>().AsSingle()
                 .WithArguments(coordinateModifiers.ToArray());
+        }
+
+        private void InstallTilePositionGenerator(TileType tileType, float tileSize, DifficultyLevel difficultyLevel,
+            Vector2Int launchPadSize)
+        {
+            if (tileSize <= 0)
+                throw new Exception($"[ModelInstaller.InstallTilePositionGenerator] tile size <= 0");
+
+            if (launchPadSize.x <= 0 || launchPadSize.y <= 0)
+                throw new Exception($"[ModelInstaller.InstallTilePositionGenerator] incorrect launch pad dimensions");
+
+            switch (tileType)
+            {
+                case TileType.Square:
+                    Container.BindInterfacesTo<SquareTilePositionGenerator>().AsSingle()
+                        .WithArguments(tileSize, difficultyLevel, launchPadSize);
+                    break;
+                default:
+                    throw new Exception(
+                        $"[ModelInstaller.InstallTilePositionGenerator] unhandled TileType : {tileType}");
+            }
         }
     }
 }

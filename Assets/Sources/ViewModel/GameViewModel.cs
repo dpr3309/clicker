@@ -5,6 +5,7 @@ namespace Clicker.ViewModel
 {
     public interface IGameViewModel
     {
+        public void Startup();
         public void Update();
     }
 
@@ -16,6 +17,11 @@ namespace Clicker.ViewModel
         private GameViewModel(IGameModel gameModel)
         {
             this._gameModel = gameModel;
+        }
+
+        public void Startup()
+        {
+            _gameModel.Startup();
         }
         
         public void Update()

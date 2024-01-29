@@ -21,6 +21,11 @@ namespace Clicker.Model
             _crystalModel = crystalModel;
         }
 
+        public void Startup()
+        {
+            _fieldModel.Startup();
+        }
+
         public void Update()
         {
             Vector3 newPlayerPosition =

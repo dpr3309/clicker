@@ -1,3 +1,4 @@
+using System;
 using Clicker.ViewModel;
 using UnityEngine;
 using Zenject;
@@ -12,6 +13,11 @@ namespace Clicker.View
         private void Initialize(IGameViewModel gameViewModel)
         {
             this._gameViewModel = gameViewModel;
+        }
+
+        private void Start()
+        {
+            _gameViewModel.Startup();
         }
 
         void Update()
