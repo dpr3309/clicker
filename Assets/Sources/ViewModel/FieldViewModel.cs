@@ -7,9 +7,9 @@ namespace Clicker.ViewModel
 {
     public class FieldViewModel : IFieldViewModel
     {
-        public IReadOnlyReactiveCollection<Vector3> TileInstances => _fieldModel.TileInstances;
-        
         private IFieldModel _fieldModel;
+
+        public IReadOnlyReactiveCollection<Vector3> TileInstances => _fieldModel.TileInstances;
 
         [Inject]
         private FieldViewModel(IFieldModel fieldModel)

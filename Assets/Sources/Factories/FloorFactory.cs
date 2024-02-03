@@ -33,7 +33,7 @@ namespace Clicker.Factories
 
         public void RemoveItemInPosition(Vector3 position)
         {
-            throw new System.NotImplementedException();
+            currentParticleSystem.HideSingleItemInCell(position);
         }
     }
 

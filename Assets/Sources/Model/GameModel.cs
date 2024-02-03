@@ -29,9 +29,9 @@ namespace Clicker.Model
         public void Update()
         {
             Vector3 newPlayerPosition =
-                _coordinateProcessor.TransformCoordinates(_playerChipModel.Position, _playerChipModel.Speed);
+                _coordinateProcessor.TransformCoordinates(_playerChipModel.Position.Value, _playerChipModel.Speed);
             _playerChipModel.UpdatePosition(newPlayerPosition);
-            ProcessPlayerPosition(_playerChipModel.Position);
+            ProcessPlayerPosition(_playerChipModel.Position.Value);
         }
 
         private void ProcessPlayerPosition(Vector3 playerChipPosition)
