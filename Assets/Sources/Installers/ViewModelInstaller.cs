@@ -8,6 +8,7 @@ namespace Clicker.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<GameViewModel>().AsSingle();
+            Container.BindInterfacesTo<FieldViewModel>().AsSingle();
         }
     }
 }

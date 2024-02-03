@@ -12,7 +12,7 @@ namespace Clicker.View
         [Inject]
         private void Initialize(IGameViewModel gameViewModel)
         {
-            this._gameViewModel = gameViewModel;
+            _gameViewModel = gameViewModel;
         }
 
         private void Start()
