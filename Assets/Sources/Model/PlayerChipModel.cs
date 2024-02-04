@@ -12,7 +12,6 @@ namespace Clicker.Model
         public IReactiveProperty<Vector3> Position => _position;
 
         private readonly Vector3 _startOffset = new Vector3(0, 0.5f, 0);
-        public Vector3 StartOffset => _startOffset;
 
         public PlayerChipModel(ICoordinateProcessor coordinateProcessor)
         {
