@@ -5,7 +5,7 @@ namespace Clicker.Model
 {
     public interface ITilePositionGenerator
     {
-        IReadOnlyCollection<Vector3> GenerateLaunchPadPositions();
-        IReadOnlyCollection<Vector3> GeneratePositions();
+        IReadOnlyCollection<Vector2> GenerateLaunchPadPositions();
+        IReadOnlyCollection<Vector2> GeneratePositions();
     }
 }

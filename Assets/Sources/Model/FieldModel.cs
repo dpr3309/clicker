@@ -8,8 +8,8 @@ namespace Clicker.Model
 {
     internal class FieldModel : IFieldModel
     {
-        private IReactiveCollection<Vector3> _tileInstances = new ReactiveCollection<Vector3>();
-        public IReadOnlyReactiveCollection<Vector3> TileInstances => _tileInstances;
+        private IReactiveCollection<Vector2> _tileInstances = new ReactiveCollection<Vector2>();
+        public IReadOnlyReactiveCollection<Vector2> TileInstances => _tileInstances;
         private ITilePositionGenerator _positionGenerator;
 
         private const float OFFSET = -2.5f;
@@ -30,13 +30,13 @@ namespace Clicker.Model
         }
 
 
-        public void ReleaseTraversedObjects(Vector3 playerChipPosition)
+        public void ReleaseTraversedObjects(Vector2 playerChipPosition)
         {
             var traversedTiles = _tileInstances.SelectTraversedObject(playerChipPosition, OFFSET);
             ReleaseObjects(traversedTiles, _tileInstances);
         }
 
-        private void ReleaseObjects(List<Vector3> itemsToFreed, IReactiveCollection<Vector3> instances)
+        private void ReleaseObjects(List<Vector2> itemsToFreed, IReactiveCollection<Vector2> instances)
         {
             for (int i = 0; i < itemsToFreed.Count; i++)
             {
@@ -60,7 +60,7 @@ namespace Clicker.Model
             _tileInstances.AddRange(tilesPositions);
         }
 
-        public void ProcessPlayerPosition(Vector3 playerChipPosition)
+        public void ProcessPlayerPosition(Vector2 playerChipPosition)
         {
             ReleaseTraversedObjects(playerChipPosition);
             CheckTilesCount();

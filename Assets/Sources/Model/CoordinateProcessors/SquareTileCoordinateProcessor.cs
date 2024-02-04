@@ -16,7 +16,7 @@ namespace Clicker.Model
             tileArea = GeometricCalculator.CalculateAreaOfSquare(tileSize);
         }
 
-        public bool ContainsCoordinates(Vector3 coordinatesCenterOfFigure, Vector3 otherCoordinates)
+        public bool ContainsCoordinates(Vector2 coordinatesCenterOfFigure, Vector2 otherCoordinates)
         {
             return GeometricCalculator.SquareContainsPoint(coordinatesCenterOfFigure, otherCoordinates, halfTileSize,
                 tileArea);

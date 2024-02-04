@@ -16,5 +16,10 @@ namespace Clicker.ViewModel
         {
             _playerChipModel = playerChipModel;
         }
+
+        public void ChangeDirection()
+        {
+            _playerChipModel.ChangeDirection();
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace Clicker.Model
             return _coordinateModifierManager.TransformCoordinates(playerChipPosition, modifier);
         }
 
-        public bool CoordinatesAreWithinTiles(Vector3 playerChipPosition, IEnumerable<Vector3> tilesCoordinates)
+        public bool CoordinatesAreWithinTiles(Vector2 playerChipPosition, IEnumerable<Vector2> tilesCoordinates)
         {
             foreach (var tileCenterCoordinate in tilesCoordinates)
             {
@@ -36,9 +36,14 @@ namespace Clicker.Model
             return false;
         }
 
-        public bool PlayerChipCollisionWithOtherObject(Vector3 playerChipPosition, Vector3 otherObjectCoordinate)
+        public bool PlayerChipCollisionWithOtherObject(Vector2 playerChipPosition, Vector2 otherObjectCoordinate)
         {
             return _playerChipCoordinateProcessor.ContainsCoordinates(playerChipPosition, otherObjectCoordinate);
+        }
+
+        public void ChangeDirection()
+        {
+            _coordinateModifierManager.ChangeDirection();
         }
     }
 }

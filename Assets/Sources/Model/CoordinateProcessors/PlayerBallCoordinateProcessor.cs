@@ -12,7 +12,7 @@ namespace Clicker.Model
             this.radius = radius;
         }
 
-        public bool ContainsCoordinates(Vector3 coordinatesCenterOfFigure, Vector3 otherCoordinates)
+        public bool ContainsCoordinates(Vector2 coordinatesCenterOfFigure, Vector2 otherCoordinates)
         {
             return GeometricCalculator.CircleContainsPoint(coordinatesCenterOfFigure, otherCoordinates, radius);
         }

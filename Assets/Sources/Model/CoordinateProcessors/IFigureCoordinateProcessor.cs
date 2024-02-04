@@ -4,6 +4,6 @@ namespace Clicker.Model
 {
     internal interface IFigureCoordinateProcessor
     {
-        bool ContainsCoordinates(Vector3 coordinatesCenterOfFigure, Vector3 otherCoordinates);
+        bool ContainsCoordinates(Vector2 coordinatesCenterOfFigure, Vector2 otherCoordinates);
     }
 }

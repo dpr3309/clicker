@@ -45,17 +45,17 @@ namespace Clicker.Model
             }
         }
 
-        public IReadOnlyCollection<Vector3> GenerateLaunchPadPositions()
+        public IReadOnlyCollection<Vector2> GenerateLaunchPadPositions()
         {
             Vector2[,] generatedTilePositions = new Vector2[_launchPadSize.x, _launchPadSize.y];
-            List<Vector3> result = new List<Vector3>();
+            List<Vector2> result = new List<Vector2>();
             for (int y = 0; y < _launchPadSize.y; y++)
             {
                 for (int x = 0; x < _launchPadSize.x; x++)
                 {
                     generatedTilePositions[x, y] = new Vector2(x * _tileSize, y * _tileSize);
                     var tilePosition = generatedTilePositions[x, y];
-                    result.Add(new Vector3(tilePosition.x, tilePosition.y, 0));
+                    result.Add(new Vector2(tilePosition.x, tilePosition.y));
                 }
             }
 
@@ -67,20 +67,20 @@ namespace Clicker.Model
             return result.AsReadOnly();
         }
 
-        public IReadOnlyCollection<Vector3> GeneratePositions()
+        public IReadOnlyCollection<Vector2> GeneratePositions()
         {
             FaceDirections extremeFace = (FaceDirections)UnityEngine.Random.Range(0, 2);
             Vector2[,] generatedTilePositions =
                 _tilePositionGenerator.GenerateTilePositions(extremeFace, extremeCellPositions);
             extremeCellPositions = _tilePositionGenerator.GenerateExtremeCellPositions(generatedTilePositions);
 
-            List<Vector3> result = new List<Vector3>();
+            List<Vector2> result = new List<Vector2>();
             for (int y = 0; y <= generatedTilePositions.GetUpperBound(1); y++)
             {
                 for (int x = 0; x <= generatedTilePositions.GetUpperBound(0); x++)
                 {
                     var tilePosition = generatedTilePositions[x, y];
-                    result.Add(new Vector3(tilePosition.x, tilePosition.y, 0));
+                    result.Add(new Vector2(tilePosition.x, tilePosition.y));
                 }
             }
 

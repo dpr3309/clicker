@@ -5,6 +5,7 @@ namespace Clicker.ViewModel
 {
     public interface IPlayerChipViewModel
     {
-        public IReadOnlyReactiveProperty<Vector3> Position { get; }
+        IReadOnlyReactiveProperty<Vector3> Position { get; }
+        void ChangeDirection();
     }
 }

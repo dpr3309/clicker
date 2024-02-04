@@ -5,6 +5,6 @@ namespace Clicker.ViewModel
 {
     public interface IFieldViewModel
     {
-        public IReadOnlyReactiveCollection<Vector3> TileInstances { get; }
+        public IReadOnlyReactiveCollection<Vector2> TileInstances { get; }
     }
 }

@@ -31,10 +31,13 @@ namespace Clicker.Model
             Vector3 newPlayerPosition =
                 _coordinateProcessor.TransformCoordinates(_playerChipModel.Position.Value, _playerChipModel.Speed);
             _playerChipModel.UpdatePosition(newPlayerPosition);
-            ProcessPlayerPosition(_playerChipModel.Position.Value);
+
+            // not good.
+            // todo: try send x & z coordinates without Vector2?
+            ProcessPlayerPosition(new Vector2(_playerChipModel.Position.Value.x, _playerChipModel.Position.Value.z));
         }
 
-        private void ProcessPlayerPosition(Vector3 playerChipPosition)
+        private void ProcessPlayerPosition(Vector2 playerChipPosition)
         {
             if (_coordinateProcessor.CoordinatesAreWithinTiles(playerChipPosition, _fieldModel.TileInstances))
             {

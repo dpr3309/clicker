@@ -20,10 +20,10 @@ public static class Extentions
         ps.Emit(emitParams, 1);
     }
 
-    public static List<Vector3> SelectTraversedObject(this IReactiveCollection<Vector3> instances,
-        Vector3 playerChipCoordinates, float offset)
+    public static List<Vector2> SelectTraversedObject(this IReactiveCollection<Vector2> instances,
+        Vector2 playerChipCoordinates, float offset)
     {
-        return instances.Where(i => i.x < playerChipCoordinates.x + offset || i.z < playerChipCoordinates.z + offset)
+        return instances.Where(i => i.x < playerChipCoordinates.x + offset || i.y < playerChipCoordinates.y + offset)
             .ToList();
     }
 }

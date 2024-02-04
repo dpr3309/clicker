@@ -22,5 +22,11 @@ namespace Clicker.Model
         {
             return _currentCoordinateModifier.TransformCoordinates(coordinate, modifier);
         }
+
+        public void ChangeDirection()
+        {
+            index = (++index < _coordinateModifiers.Length) ? index : 0;
+            _currentCoordinateModifier = _coordinateModifiers[index];
+        }
     }
 }
