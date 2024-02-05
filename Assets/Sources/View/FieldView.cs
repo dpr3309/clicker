@@ -8,16 +8,14 @@ namespace Clicker.View
 {
     public class FieldView : MonoBehaviour
     {
-        //todo: inject this
-        [SerializeField]
         private FloorFactory _ff;
-
         private IFieldViewModel _fieldViewModel;
 
         [Inject]
-        private void Initialize(IFieldViewModel fieldViewModel)
+        private void Initialize(IFieldViewModel fieldViewModel, FloorFactory floorFactory)
         {
             _fieldViewModel = fieldViewModel;
+            _ff = floorFactory;
         }
 
         private void Start()
