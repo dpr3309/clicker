@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Clicker.Factories
@@ -6,35 +7,19 @@ namespace Clicker.Factories
     {
         [SerializeField] 
         private ParticleSystem floorParticle;
-        [SerializeField] 
-        private ParticleSystem floorParticle2;
 
-        private ParticleSystem currentParticleSystem;
-
-        void Start()
+        public void GenerateItemInPosition(Vector2 position)
         {
-            SwitchParticle();
+            floorParticle.GenerateSingleItemInCell(position);
         }
 
-        private void SwitchParticle()
+        public void OnItemRemoved(IEnumerable<Vector2> items)
         {
-            currentParticleSystem = (currentParticleSystem == floorParticle) ? floorParticle2 : floorParticle;
-            currentParticleSystem.Clear();
-        }
-
-        public void GenerateItemInPosition(Vector3 position)
-        {
-            currentParticleSystem.GenerateSingleItemInCell(position);
-            if (currentParticleSystem.particleCount > 60)
+            floorParticle.Clear();
+            foreach (var item in items)
             {
-                SwitchParticle();
+                GenerateItemInPosition(item);
             }
         }
-
-        public void RemoveItemInPosition(Vector3 position)
-        {
-            currentParticleSystem.HideSingleItemInCell(position);
-        }
     }
-
 }

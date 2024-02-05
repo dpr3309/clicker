@@ -1,4 +1,3 @@
-using System;
 using Clicker.Factories;
 using Clicker.ViewModel;
 using UniRx;
@@ -12,7 +11,7 @@ namespace Clicker.View
         //todo: inject this
         [SerializeField]
         private FloorFactory _ff;
-        
+
         private IFieldViewModel _fieldViewModel;
 
         [Inject]
@@ -24,7 +23,10 @@ namespace Clicker.View
         private void Start()
         {
             _fieldViewModel.TileInstances.ObserveAdd().Subscribe(pos => _ff.GenerateItemInPosition(pos.Value));
-            _fieldViewModel.TileInstances.ObserveRemove().Subscribe(pos => _ff.RemoveItemInPosition(pos.Value));
+            _fieldViewModel.TileInstances.ObserveRemove().Subscribe(pos =>
+            {
+                _ff.OnItemRemoved(_fieldViewModel.TileInstances);
+            });
         }
 
         private void OnDestroy()
