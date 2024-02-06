@@ -145,8 +145,13 @@ namespace Clicker.Model
                     return DifficultyLevel.Low;
 
                 default:
+                {
+                    if (upperBoundOfDimensions > 2)
+                        return DifficultyLevel.Low;
+
                     throw new Exception(
                         $"[SquareTilePositionGenerator.DetermineDifficultyLevelForCoordinates] unhandled dimensions of coordinates array. Current array dimensions = {upperBoundOfDimensions}");
+                }
             }
         }
     }
