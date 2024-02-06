@@ -12,10 +12,10 @@ namespace Clicker.Model
         public IReadOnlyReactiveCollection<Vector2> TileInstances => _tileInstances;
         private ITilePositionGenerator _positionGenerator;
 
-        private const float OFFSET = -2.5f;
 
         // todo: move it to context!
         private const int MIN_TILES_COUNT = 30;
+        private const float OFFSET = -2.5f;
 
         public FieldModel(ITilePositionGenerator positionGenerator)
         {

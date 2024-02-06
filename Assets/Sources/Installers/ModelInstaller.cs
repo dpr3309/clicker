@@ -19,11 +19,15 @@ namespace Clicker.Installers
         [SerializeField]
         private DifficultyLevel difficaltyLevel = (DifficultyLevel)(-1);
 
+        [SerializeField]
+        private CrystalPositionGeneratorType crystalPositionGeneratorType = (CrystalPositionGeneratorType)(-1);
+
 
         private GameSettings settings = new GameSettings(TileType.Square, 1, PlayerChipType.Circle, 0.5f);
 
         public override void InstallBindings()
         {
+            InstallCrystalPositionGenerator(crystalPositionGeneratorType);
             InstallPlayerChipCoordinateProcessor(settings.PlayerChipType, settings.PlayerChipRadius);
             InstallTileCoordinateProcessor(settings.TileType, settings.TileSize);
             InstallCoordinateModifierManager(coordinateModifierTypes);
@@ -114,6 +118,21 @@ namespace Clicker.Installers
                 default:
                     throw new Exception(
                         $"[ModelInstaller.InstallTilePositionGenerator] unhandled TileType : {tileType}");
+            }
+        }
+
+        private void InstallCrystalPositionGenerator(CrystalPositionGeneratorType type)
+        {
+            switch (type)
+            {
+                case CrystalPositionGeneratorType.Random:
+                    Container.BindInterfacesTo<RandomCrystalPositionGenerator>().AsSingle();
+                    break;
+                case CrystalPositionGeneratorType.InOrder:
+                    Container.BindInterfacesTo<InOrderCrystalPositionGenerator>().AsSingle();
+                    break;
+                default:
+                    throw new Exception($"[ModelInstaller.InstallCrystalPositionGenerator] unhandled CrystalPositionGeneratorType : {type}");
             }
         }
     }

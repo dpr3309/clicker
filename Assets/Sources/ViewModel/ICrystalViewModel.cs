@@ -1,13 +1,11 @@
 using UniRx;
 using UnityEngine;
 
-namespace Clicker.Model
+namespace Clicker.ViewModel
 {
-    internal interface ICrystalModel
+    public interface ICrystalViewModel
     {
         IReadOnlyReactiveProperty<ulong> Score { get; }
         IReadOnlyReactiveCollection<Vector2> CrystalPositions { get; }
-        void ProcessPlayerPosition(Vector2 playerChipPosition);
-        void Startup();
     }
 }

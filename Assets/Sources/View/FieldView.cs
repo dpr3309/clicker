@@ -8,22 +8,22 @@ namespace Clicker.View
 {
     public class FieldView : MonoBehaviour
     {
-        private FloorFactory _ff;
+        private FloorFactory _floorFactory;
         private IFieldViewModel _fieldViewModel;
 
         [Inject]
         private void Initialize(IFieldViewModel fieldViewModel, FloorFactory floorFactory)
         {
             _fieldViewModel = fieldViewModel;
-            _ff = floorFactory;
+            _floorFactory = floorFactory;
         }
 
         private void Start()
         {
-            _fieldViewModel.TileInstances.ObserveAdd().Subscribe(pos => _ff.GenerateItemInPosition(pos.Value));
+            _fieldViewModel.TileInstances.ObserveAdd().Subscribe(pos => _floorFactory.GenerateItemInPosition(pos.Value));
             _fieldViewModel.TileInstances.ObserveRemove().Subscribe(pos =>
             {
-                _ff.OnItemRemoved(_fieldViewModel.TileInstances);
+                _floorFactory.OnItemRemoved(_fieldViewModel.TileInstances);
             });
         }
 

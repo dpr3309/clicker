@@ -24,6 +24,7 @@ namespace Clicker.Model
         public void Startup()
         {
             _fieldModel.Startup();
+            _crystalModel.Startup();
         }
 
         public void Update()

@@ -9,7 +9,7 @@ namespace Clicker.Tools
     {
         [SerializeField]
         private Button button = null;
-        
+
         private IPlayerChipViewModel _playerChipViewModel;
 
         [Inject]
@@ -29,11 +29,9 @@ namespace Clicker.Tools
 #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("SPACE");
                 _playerChipViewModel.ChangeDirection();
             }
 #endif
         }
     }
 }
-

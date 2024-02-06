@@ -243,6 +243,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &99375680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 99375682}
+  - component: {fileID: 99375681}
+  m_Layer: 0
+  m_Name: CrystalsViewManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &99375681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99375680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9386157daa34f89812d374168944fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _crystals: []
+--- !u!4 &99375682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99375680}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &355723287
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,6 +403,7 @@ MonoBehaviour:
   coordinateModifierTypes: 0000000001000000
   launchPadSize: {x: 3, y: 3}
   difficaltyLevel: 0
+  crystalPositionGeneratorType: 1
 --- !u!114 &458493499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +467,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerView: {fileID: 6718665430408740647, guid: 877c5cb47f01e42dd8a953b0ad3d5fac, type: 3}
   floorFactory: {fileID: 4654442045903750363, guid: b34eb2e3c0fd34eb49c8b037061d895b, type: 3}
+  crystalsFactory: {fileID: 1913896956538054103, guid: 61218b728a0304df5bd85073eedf33eb, type: 3}
+  crystalPrototype: {fileID: 7141721062185103662, guid: f8f48c62c7d094c448d4706b0118bfaf, type: 3}
+  poolOfCrystals: {fileID: 1812554308062638740, guid: b4b8fae7484bc4991899ab1a254ab25a, type: 3}
 --- !u!1 &470841614
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,3 +822,4 @@ SceneRoots:
   - {fileID: 1442755737}
   - {fileID: 355723290}
   - {fileID: 1193991223}
+  - {fileID: 99375682}
