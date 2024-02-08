@@ -24,7 +24,7 @@ namespace Clicker.Model
         public void Startup()
         {
             _fieldModel.Startup();
-            _crystalModel.Startup();
+            _crystalModel.Startup(_playerChipModel.Position2D);
         }
 
         public void Update()
@@ -33,9 +33,8 @@ namespace Clicker.Model
                 _coordinateProcessor.TransformCoordinates(_playerChipModel.Position.Value, _playerChipModel.Speed);
             _playerChipModel.UpdatePosition(newPlayerPosition);
 
-            // not good.
-            // todo: try send x & z coordinates without Vector2?
-            ProcessPlayerPosition(new Vector2(_playerChipModel.Position.Value.x, _playerChipModel.Position.Value.z));
+
+            ProcessPlayerPosition(_playerChipModel.Position2D);
         }
 
         private void ProcessPlayerPosition(Vector2 playerChipPosition)

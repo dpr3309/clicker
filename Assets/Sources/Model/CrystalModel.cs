@@ -8,7 +8,7 @@ namespace Clicker.Model
     internal class CrystalModel : ICrystalModel
     {
         // todo: move it to context!
-        private const int MIN_CRYSTALS_COUT = 10;
+        private const int MIN_CRYSTALS_COUT = 8;
         private const float OFFSET = -2.5f;
 
         private ICoordinateProcessor _coordinateProcessor;
@@ -30,9 +30,9 @@ namespace Clicker.Model
             _fieldModel = fieldModel;
         }
 
-        public void Startup()
+        public void Startup(Vector2 playerChipPosition)
         {
-            CheckCrystalsCount();
+            CheckCrystalsCount(playerChipPosition);
         }
 
         public void ProcessPlayerPosition(Vector2 playerChipPosition)
@@ -55,7 +55,7 @@ namespace Clicker.Model
             }
 
             ReleaseTraversedObjects(playerChipPosition);
-            CheckCrystalsCount();
+            CheckCrystalsCount(playerChipPosition);
         }
 
         public void ReleaseTraversedObjects(Vector2 playerChipPosition)
@@ -72,18 +72,22 @@ namespace Clicker.Model
             }
         }
 
-        private void CheckCrystalsCount()
+        private void CheckCrystalsCount(Vector2 playerChipPosition)
         {
             if (_crystalPositions.Count < MIN_CRYSTALS_COUT)
             {
-                if (GenerationCrystals())
-                    CheckCrystalsCount();
+                if (GenerationCrystals(playerChipPosition))
+                    CheckCrystalsCount(playerChipPosition);
             }
         }
 
-        private bool GenerationCrystals()
+        private bool GenerationCrystals(Vector2 playerChipPosition)
         {
-            var availablePositions = _fieldModel.TileInstances.Except(_crystalPositions).ToList();
+            var notAvailablePositions = _fieldModel.TileInstances.SelectTraversedObject(playerChipPosition);
+            notAvailablePositions.Add(playerChipPosition);
+
+            var availablePositions = _fieldModel.TileInstances.Except(_crystalPositions).Except(notAvailablePositions)
+                .ToList();
 
             if (!availablePositions.Any())
                 return false;

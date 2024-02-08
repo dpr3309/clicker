@@ -19,6 +19,13 @@ public static class Extentions
             .ToList();
     }
 
+    public static List<Vector2> SelectTraversedObject(this IReadOnlyReactiveCollection<Vector2> instances,
+        Vector2 playerChipCoordinates, float offset = 0)
+    {
+        return instances.Where(i => i.x < playerChipCoordinates.x + offset || i.y < playerChipCoordinates.y + offset)
+            .ToList();
+    }
+
     public static T Clone<T>(this T origin, bool setAcitve = true) where T : Component
     {
         T item = GameObject.Instantiate(origin, origin.transform.parent) as T;

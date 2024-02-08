@@ -11,6 +11,10 @@ namespace Clicker.Model
         private IReactiveProperty<Vector3> _position = new ReactiveProperty<Vector3>();
         public IReactiveProperty<Vector3> Position => _position;
 
+        // not good.
+        // todo: try send x & z coordinates without Vector2?
+        public Vector2 Position2D => new (_position.Value.x, _position.Value.z);
+
         private readonly Vector3 _startOffset = new Vector3(0, 0.5f, 0);
 
         public PlayerChipModel(ICoordinateProcessor coordinateProcessor)

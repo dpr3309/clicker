@@ -8,6 +8,6 @@ namespace Clicker.Model
         IReadOnlyReactiveProperty<ulong> Score { get; }
         IReadOnlyReactiveCollection<Vector2> CrystalPositions { get; }
         void ProcessPlayerPosition(Vector2 playerChipPosition);
-        void Startup();
+        void Startup(Vector2 playerChipPosition);
     }
 }
