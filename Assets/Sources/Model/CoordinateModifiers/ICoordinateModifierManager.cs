@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Clicker.Model
 {
-    public interface ICoordinateModifierManager
+    internal interface ICoordinateModifierManager
     {
         Vector3 TransformCoordinates(Vector3 coordinate, float modifier);
         void ChangeDirection();

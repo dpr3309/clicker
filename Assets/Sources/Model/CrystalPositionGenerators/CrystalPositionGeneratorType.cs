@@ -1,6 +1,6 @@
 namespace Clicker.Installers
 {
-    public enum CrystalPositionGeneratorType
+    internal enum CrystalPositionGeneratorType
     {
         Random,
         InOrder

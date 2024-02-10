@@ -1,6 +1,6 @@
 namespace Clicker.Model
 {
-    public enum DifficultyLevel
+    internal enum DifficultyLevel
     {
         Low,
         Middle,

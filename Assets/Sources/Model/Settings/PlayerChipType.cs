@@ -1,6 +1,6 @@
 namespace Clicker.Model
 {
-    public enum PlayerChipType
+    internal enum PlayerChipType
     {
         Circle,
     }

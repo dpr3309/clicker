@@ -1,5 +1,6 @@
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace Clicker.Model
 {
@@ -17,7 +18,8 @@ namespace Clicker.Model
 
         private readonly Vector3 _startOffset = new Vector3(0, 0.5f, 0);
 
-        public PlayerChipModel(ICoordinateProcessor coordinateProcessor)
+        [Inject]
+        private PlayerChipModel(ICoordinateProcessor coordinateProcessor)
         {
             _coordinateProcessor = coordinateProcessor;
         }

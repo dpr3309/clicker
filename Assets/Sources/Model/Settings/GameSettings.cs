@@ -4,7 +4,7 @@ using Zenject;
 namespace Clicker.Model
 {
     [Serializable]
-    public class GameSettings
+    internal class GameSettings
     {
         public TileType TileType { get; }
         public float TileSize { get; }

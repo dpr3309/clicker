@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace Clicker.Model
 {
@@ -22,7 +23,8 @@ namespace Clicker.Model
         private IReactiveCollection<Vector2> _crystalPositions = new ReactiveCollection<Vector2>();
         public IReadOnlyReactiveCollection<Vector2> CrystalPositions => _crystalPositions;
 
-        public CrystalModel(ICoordinateProcessor coordinateProcessor,
+        [Inject]
+        private CrystalModel(ICoordinateProcessor coordinateProcessor,
             ICrystalPositionGenerator crystalPositionGenerator, IFieldModel fieldModel)
         {
             _coordinateProcessor = coordinateProcessor;

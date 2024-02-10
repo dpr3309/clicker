@@ -1,6 +1,6 @@
 namespace Clicker.Installers
 {
-    public enum CoordinateModifierTypes
+    internal enum CoordinateModifierTypes
     {
         Forward,
         Right,

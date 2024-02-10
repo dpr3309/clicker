@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Clicker.Model
 {
-    public class GameModel : IGameModel
+    internal class GameModel : IGameModel
     {
         private readonly IPlayerChipModel _playerChipModel;
         private readonly ICoordinateProcessor _coordinateProcessor;
@@ -32,7 +32,6 @@ namespace Clicker.Model
             Vector3 newPlayerPosition =
                 _coordinateProcessor.TransformCoordinates(_playerChipModel.Position.Value, _playerChipModel.Speed);
             _playerChipModel.UpdatePosition(newPlayerPosition);
-
 
             ProcessPlayerPosition(_playerChipModel.Position2D);
         }

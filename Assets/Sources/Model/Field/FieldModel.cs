@@ -3,6 +3,7 @@ using System.Linq;
 using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
 namespace Clicker.Model
 {
@@ -17,7 +18,8 @@ namespace Clicker.Model
         private const int MIN_TILES_COUNT = 30;
         private const float OFFSET = -2.5f;
 
-        public FieldModel(ITilePositionGenerator positionGenerator)
+        [Inject]
+        private FieldModel(ITilePositionGenerator positionGenerator)
         {
             _positionGenerator = positionGenerator;
         }
@@ -25,7 +27,10 @@ namespace Clicker.Model
         public void Startup()
         {
             var tilesPositions = _positionGenerator.GenerateLaunchPadPositions().ToList().AsReadOnly();
-            _tileInstances.AddRange(tilesPositions);
+            foreach (var position in tilesPositions)
+            {
+                _tileInstances.Add(position);
+            }
             CheckTilesCount();
         }
 
@@ -57,7 +62,10 @@ namespace Clicker.Model
         private void GenerationTiles()
         {
             var tilesPositions = _positionGenerator.GeneratePositions();
-            _tileInstances.AddRange(tilesPositions);
+            foreach (var position in tilesPositions)
+            {
+                _tileInstances.Add(position);
+            }
         }
 
         public void ProcessPlayerPosition(Vector2 playerChipPosition)

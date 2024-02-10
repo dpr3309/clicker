@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Clicker.Model
 {
-    internal interface IPlayerChipModel
+    public interface IPlayerChipModel
     {
         float Speed { get; }
         IReactiveProperty<Vector3> Position { get; }

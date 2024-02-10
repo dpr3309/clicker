@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Clicker.Tools
 {
-    internal abstract class PoolOfPrototypes<T> : MonoBehaviour
+    public abstract class PoolOfPrototypes<T> : MonoBehaviour
         where T : Component
     {
         private ObjectPool<T> pool;

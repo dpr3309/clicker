@@ -1,6 +1,6 @@
 namespace Clicker.Model
 {
-    public enum TileType
+    internal enum TileType
     {
         Square,
     }

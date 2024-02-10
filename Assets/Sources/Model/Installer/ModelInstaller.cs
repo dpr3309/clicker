@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Clicker.Installers
 {
-    public class ModelInstaller : MonoInstaller
+    internal class ModelInstaller : MonoInstaller
     {
         [SerializeField]
         private List<CoordinateModifierTypes> coordinateModifierTypes =
