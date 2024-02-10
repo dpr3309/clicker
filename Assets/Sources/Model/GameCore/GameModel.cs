@@ -10,6 +10,7 @@ namespace Clicker.Model
         private readonly ICoordinateProcessor _coordinateProcessor;
         private readonly IFieldModel _fieldModel;
         private readonly ICrystalModel _crystalModel;
+        private Action _updateAction = () => { };
 
         [Inject]
         private GameModel(IPlayerChipModel playerChipModel, IFieldModel fieldModel,
@@ -25,15 +26,28 @@ namespace Clicker.Model
         {
             _fieldModel.Startup();
             _crystalModel.Startup(_playerChipModel.Position2D);
+            _updateAction = InGameAction;
         }
 
         public void Update()
+        {
+            _updateAction.Invoke();
+        }
+
+        private void InGameAction()
         {
             Vector3 newPlayerPosition =
                 _coordinateProcessor.TransformCoordinates(_playerChipModel.Position.Value, _playerChipModel.Speed);
             _playerChipModel.UpdatePosition(newPlayerPosition);
 
             ProcessPlayerPosition(_playerChipModel.Position2D);
+        }
+
+        private void FallingAction()
+        {
+            Vector3 newPlayerPosition =
+                _coordinateProcessor.TransformCoordinatesFall(_playerChipModel.Position.Value, _playerChipModel.Speed);
+            _playerChipModel.UpdatePosition(newPlayerPosition);
         }
 
         private void ProcessPlayerPosition(Vector2 playerChipPosition)
@@ -45,7 +59,7 @@ namespace Clicker.Model
             }
             else
             {
-                throw new NotImplementedException("Game over");
+                _updateAction = FallingAction;
             }
         }
     }

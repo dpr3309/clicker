@@ -14,9 +14,7 @@ namespace Clicker.Model
 
         // not good.
         // todo: try send x & z coordinates without Vector2?
-        public Vector2 Position2D => new (_position.Value.x, _position.Value.z);
-
-        private readonly Vector3 _startOffset = new Vector3(0, 0.5f, 0);
+        public Vector2 Position2D => new(_position.Value.x, _position.Value.z);
 
         [Inject]
         private PlayerChipModel(ICoordinateProcessor coordinateProcessor)
@@ -26,7 +24,6 @@ namespace Clicker.Model
 
         public void UpdatePosition(Vector3 newPosition)
         {
-            newPosition.y = _startOffset.y;
             _position.Value = newPosition;
         }
 

@@ -23,6 +23,11 @@ namespace Clicker.Model
             return _currentCoordinateModifier.TransformCoordinates(coordinate, modifier);
         }
 
+        public Vector3 TransformCoordinatesFall(Vector3 coordinate, float modifier)
+        {
+            return _currentCoordinateModifier.TransformCoordinatesFall(coordinate, modifier);
+        }
+
         public void ChangeDirection()
         {
             index = (++index < _coordinateModifiers.Length) ? index : 0;

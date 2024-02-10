@@ -25,6 +25,11 @@ namespace Clicker.Model
             return _coordinateModifierManager.TransformCoordinates(playerChipPosition, modifier);
         }
 
+        public Vector3 TransformCoordinatesFall(Vector3 playerChipPosition, float modifier)
+        {
+            return _coordinateModifierManager.TransformCoordinatesFall(playerChipPosition, modifier);
+        }
+
         public bool CoordinatesAreWithinTiles(Vector2 playerChipPosition, IEnumerable<Vector2> tilesCoordinates)
         {
             foreach (var tileCenterCoordinate in tilesCoordinates)
