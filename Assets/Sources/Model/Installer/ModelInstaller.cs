@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Clicker.Model;
+using Clicker.Model.FSMComponents;
+using Clicker.Model.FSMComponents.States;
 using UnityEngine;
 using Zenject;
 
@@ -27,6 +29,8 @@ namespace Clicker.Installers
 
         public override void InstallBindings()
         {
+            InstallGameCoreFSM();
+
             InstallCrystalPositionGenerator(crystalPositionGeneratorType);
             InstallPlayerChipCoordinateProcessor(settings.PlayerChipType, settings.PlayerChipRadius);
             InstallTileCoordinateProcessor(settings.TileType, settings.TileSize);
@@ -39,6 +43,17 @@ namespace Clicker.Installers
             Container.BindInterfacesTo<PlayerChipModel>().AsSingle();
             Container.BindInterfacesTo<CrystalModel>().AsSingle();
             Container.BindInterfacesTo<GameModel>().AsSingle();
+            Container.BindInterfacesTo<GameInfoModel>().AsSingle();
+        }
+
+        private void InstallGameCoreFSM()
+        {
+            Container.BindInterfacesAndSelfTo<InitGameState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ReadyToStartState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<InGameState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EndOfGameState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LostGameState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle();
         }
 
         private void InstallPlayerChipCoordinateProcessor(PlayerChipType playerChipType, float playerChipRadius)
@@ -132,7 +147,8 @@ namespace Clicker.Installers
                     Container.BindInterfacesTo<InOrderCrystalPositionGenerator>().AsSingle();
                     break;
                 default:
-                    throw new Exception($"[ModelInstaller.InstallCrystalPositionGenerator] unhandled CrystalPositionGeneratorType : {type}");
+                    throw new Exception(
+                        $"[ModelInstaller.InstallCrystalPositionGenerator] unhandled CrystalPositionGeneratorType : {type}");
             }
         }
     }

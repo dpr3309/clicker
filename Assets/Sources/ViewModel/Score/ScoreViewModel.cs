@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Clicker.ViewModel
 {
-    public class ScoreViewModel : IScoreViewModel
+    internal class ScoreViewModel : IScoreViewModel
     {
         private ICrystalModel _crystalModel;
         public IReadOnlyReactiveProperty<ulong> Score => _crystalModel.Score;

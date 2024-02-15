@@ -8,5 +8,6 @@ namespace Clicker.Model
         public IReadOnlyReactiveCollection<Vector2> TileInstances { get; }
         void ProcessPlayerPosition(Vector2 playerChipPosition);
         void Startup();
+        void ReleaseAll();
     }
 }

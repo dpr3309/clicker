@@ -11,5 +11,10 @@ namespace Clicker.Model
         void UpdatePosition(Vector3 newPosition);
 
         void ChangeDirection();
+        void StartFall();
+        void StopMove();
+        void StartMove();
+        void Restart();
+        void Update();
     }
 }

@@ -10,23 +10,39 @@ namespace Clicker.Model
         private readonly ICoordinateProcessor _coordinateProcessor;
         private readonly IFieldModel _fieldModel;
         private readonly ICrystalModel _crystalModel;
+        private readonly IGameInfoModel _gameInfoModel;
+
         private Action _updateAction = () => { };
+        public bool LostGame { get; private set; }
 
         [Inject]
         private GameModel(IPlayerChipModel playerChipModel, IFieldModel fieldModel,
-            ICoordinateProcessor coordinateProcessor, ICrystalModel crystalModel)
+            ICoordinateProcessor coordinateProcessor, ICrystalModel crystalModel, IGameInfoModel gameInfoModel)
         {
             _playerChipModel = playerChipModel;
             _coordinateProcessor = coordinateProcessor;
             _fieldModel = fieldModel;
             _crystalModel = crystalModel;
+            _gameInfoModel = gameInfoModel;
         }
 
-        public void Startup()
+
+        public float FallingOfPlayer()
         {
-            _fieldModel.Startup();
-            _crystalModel.Startup(_playerChipModel.Position2D);
-            _updateAction = InGameAction;
+            _updateAction.Invoke();
+            return _playerChipModel.Position.Value.y;
+        }
+
+        public void StartGame()
+        {
+            _gameInfoModel.ClearMessage();
+            _playerChipModel.StartMove();
+
+            _updateAction = () =>
+            {
+                _playerChipModel.Update();
+                ProcessPlayerPosition(_playerChipModel.Position2D);
+            };
         }
 
         public void Update()
@@ -34,20 +50,37 @@ namespace Clicker.Model
             _updateAction.Invoke();
         }
 
-        private void InGameAction()
+        public void WaitLost()
         {
-            Vector3 newPlayerPosition =
-                _coordinateProcessor.TransformCoordinates(_playerChipModel.Position.Value, _playerChipModel.Speed);
-            _playerChipModel.UpdatePosition(newPlayerPosition);
-
-            ProcessPlayerPosition(_playerChipModel.Position2D);
+            LostGame = false;
+            _playerChipModel.StartFall();
+            _updateAction = () =>
+            {
+                _playerChipModel.Update();
+            };
         }
 
-        private void FallingAction()
+        public void Restart()
         {
-            Vector3 newPlayerPosition =
-                _coordinateProcessor.TransformCoordinatesFall(_playerChipModel.Position.Value, _playerChipModel.Speed);
-            _playerChipModel.UpdatePosition(newPlayerPosition);
+            _crystalModel.ReleaseAll();
+            _crystalModel.ResetScore();
+            _fieldModel.ReleaseAll();
+            _gameInfoModel.ClearMessage();
+            _playerChipModel.Restart();
+        }
+
+        public void EndOfGame()
+        {
+            _updateAction = () => { };
+            _playerChipModel.StopMove();
+            _gameInfoModel.EndOfGameMessage();
+        }
+
+        public void Startup()
+        {
+            _fieldModel.Startup();
+            _crystalModel.Startup(_playerChipModel.Position2D);
+            _gameInfoModel.StartMessage();
         }
 
         private void ProcessPlayerPosition(Vector2 playerChipPosition)
@@ -59,7 +92,7 @@ namespace Clicker.Model
             }
             else
             {
-                _updateAction = FallingAction;
+                LostGame = true;
             }
         }
     }

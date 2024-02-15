@@ -37,6 +37,16 @@ namespace Clicker.Model
             CheckCrystalsCount(playerChipPosition);
         }
 
+        public void ReleaseAll()
+        {
+            ReleaseObjects(_crystalPositions.ToList(), _crystalPositions);
+        }
+
+        public void ResetScore()
+        {
+            _score.Value = 0;
+        }
+
         public void ProcessPlayerPosition(Vector2 playerChipPosition)
         {
             List<Vector2> toRemove = new List<Vector2>();

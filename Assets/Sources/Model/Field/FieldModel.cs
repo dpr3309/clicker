@@ -34,6 +34,10 @@ namespace Clicker.Model
             CheckTilesCount();
         }
 
+        public void ReleaseAll()
+        {
+            ReleaseObjects(_tileInstances.ToList(), _tileInstances);
+        }
 
         public void ReleaseTraversedObjects(Vector2 playerChipPosition)
         {

@@ -1,33 +1,31 @@
-using Clicker.Model;
+using Clicker.Model.FSMComponents;
 using Zenject;
 
 namespace Clicker.ViewModel
 {
-    public interface IGameViewModel
-    {
-        public void Startup();
-        public void Update();
-    }
-
     public class GameViewModel : IGameViewModel
     {
-        private IGameModel _gameModel;
+        private IGameStateMachine _fsm;
 
         [Inject]
-        private GameViewModel(IGameModel gameModel)
+        private GameViewModel(IGameStateMachine fsm)
         {
-            this._gameModel = gameModel;
+            _fsm = fsm;
         }
 
         public void Startup()
         {
-            _gameModel.Startup();
+            _fsm.Startup();
         }
-        
+
         public void Update()
         {
-            _gameModel.Update();
+            _fsm.Update();
+        }
+
+        public void Click()
+        {
+            _fsm.Click();
         }
     }
 }
-

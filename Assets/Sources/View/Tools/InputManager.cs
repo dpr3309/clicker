@@ -10,18 +10,18 @@ namespace Clicker.Tools
         [SerializeField]
         private Button button = null;
 
-        private IPlayerChipViewModel _playerChipViewModel;
+        private IGameViewModel _gameViewModel;
 
         [Inject]
-        private void Initialize(IPlayerChipViewModel playerChipViewModel)
+        private void Initialize(IGameViewModel gameViewModel)
         {
-            _playerChipViewModel = playerChipViewModel;
+            _gameViewModel = gameViewModel;
         }
 
         private void Start()
         {
             button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => _playerChipViewModel.ChangeDirection());
+            button.onClick.AddListener(() => _gameViewModel.Click());
         }
 
         private void Update()
@@ -29,7 +29,7 @@ namespace Clicker.Tools
 #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _playerChipViewModel.ChangeDirection();
+                _gameViewModel.Click();
             }
 #endif
         }

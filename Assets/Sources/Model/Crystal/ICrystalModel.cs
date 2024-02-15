@@ -9,5 +9,7 @@ namespace Clicker.Model
         IReadOnlyReactiveCollection<Vector2> CrystalPositions { get; }
         void ProcessPlayerPosition(Vector2 playerChipPosition);
         void Startup(Vector2 playerChipPosition);
+        void ReleaseAll();
+        void ResetScore();
     }
 }

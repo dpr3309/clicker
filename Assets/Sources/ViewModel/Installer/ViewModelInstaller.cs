@@ -12,6 +12,7 @@ namespace Clicker.Installers
             Container.BindInterfacesTo<PlayerChipViewModel>().AsSingle();
             Container.BindInterfacesTo<CrystalViewModel>().AsSingle();
             Container.BindInterfacesTo<ScoreViewModel>().AsSingle();
+            Container.BindInterfacesTo<GameInfoViewModel>().AsSingle();
         }
     }
 }
