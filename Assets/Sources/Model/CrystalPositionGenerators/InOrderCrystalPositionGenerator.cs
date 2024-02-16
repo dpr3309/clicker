@@ -1,22 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
 using Clicker.Tools.SelectionAlgorithms;
-using UnityEngine;
+using Zenject;
 
 namespace Clicker.Model
 {
-    internal sealed class InOrderCrystalPositionGenerator : ICrystalPositionGenerator
+    internal sealed class InOrderCrystalPositionGenerator : BaseCrystalPositionGenerator
     {
-        private InOrderItemSelector selector;
-
-        public InOrderCrystalPositionGenerator()
+        [Inject]
+        private InOrderCrystalPositionGenerator(ISelector selector)
+            : base(selector)
         {
-            selector = new InOrderItemSelector(5);
-        }
-
-        public IReadOnlyCollection<Vector2> GenerateCrystalPositions(IEnumerable<Vector2> availablePositions)
-        {
-            return selector.SelectItems(availablePositions).ToList().AsReadOnly();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using Clicker.Model;
 using Clicker.Model.FSMComponents;
 using Clicker.Model.FSMComponents.States;
+using Clicker.Tools.SelectionAlgorithms;
 using UnityEngine;
 using Zenject;
 
@@ -23,6 +24,9 @@ namespace Clicker.Installers
 
         [SerializeField]
         private CrystalPositionGeneratorType crystalPositionGeneratorType = (CrystalPositionGeneratorType)(-1);
+
+        [SerializeField]
+        private int maxSelectorIterationCount = 5;
 
 
         private GameSettings settings = new GameSettings(TileType.Square, 1, PlayerChipType.Circle, 0.5f);
@@ -141,9 +145,11 @@ namespace Clicker.Installers
             switch (type)
             {
                 case CrystalPositionGeneratorType.Random:
+                    Container.BindInterfacesTo<RandomItemSelector>().AsSingle().WithArguments(maxSelectorIterationCount);
                     Container.BindInterfacesTo<RandomCrystalPositionGenerator>().AsSingle();
                     break;
                 case CrystalPositionGeneratorType.InOrder:
+                    Container.BindInterfacesTo<InOrderItemSelector>().AsSingle().WithArguments(maxSelectorIterationCount);
                     Container.BindInterfacesTo<InOrderCrystalPositionGenerator>().AsSingle();
                     break;
                 default:
