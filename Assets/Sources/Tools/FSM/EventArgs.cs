@@ -1,4 +1,4 @@
-namespace Clicker.FSMComponents
+namespace Clicker.Tools.FSMComponents
 {
     public class EventArgs
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Clicker.FSMComponents
+namespace Clicker.Tools.FSMComponents
 {
     public abstract class AState : IState
     {

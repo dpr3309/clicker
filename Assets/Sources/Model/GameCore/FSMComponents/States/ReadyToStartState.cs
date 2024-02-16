@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Clicker.FSMComponents;
-using EventArgs = Clicker.FSMComponents.EventArgs;
+using Clicker.Tools.FSMComponents;
+using EventArgs = Clicker.Tools.FSMComponents.EventArgs;
 
 namespace Clicker.Model.FSMComponents.States
 {

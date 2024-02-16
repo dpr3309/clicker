@@ -1,4 +1,4 @@
-using Clicker.FSMComponents;
+using Clicker.Tools.FSMComponents;
 using Clicker.Model.FSMComponents.States;
 using Zenject;
 

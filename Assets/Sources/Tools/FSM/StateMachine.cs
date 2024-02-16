@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Clicker.FSMComponents
+namespace Clicker.Tools.FSMComponents
 {
     public class StateMachine<T>
         where T : IState

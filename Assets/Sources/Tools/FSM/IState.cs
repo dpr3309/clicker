@@ -1,6 +1,6 @@
 using System;
 
-namespace Clicker.FSMComponents
+namespace Clicker.Tools.FSMComponents
 {
     public interface IState
     {
