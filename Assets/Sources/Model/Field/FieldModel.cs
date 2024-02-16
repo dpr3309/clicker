@@ -11,9 +11,8 @@ namespace Clicker.Model
     {
         private IReactiveCollection<Vector2> _tileInstances = new ReactiveCollection<Vector2>();
         public IReadOnlyReactiveCollection<Vector2> TileInstances => _tileInstances;
-        private ITilePositionGenerator _positionGenerator;
-        private ApplicationContext _applicationContext;
-
+        private readonly ITilePositionGenerator _positionGenerator;
+        private readonly ApplicationContext _applicationContext;
 
         [Inject]
         private FieldModel(ITilePositionGenerator positionGenerator, ApplicationContext applicationContext)

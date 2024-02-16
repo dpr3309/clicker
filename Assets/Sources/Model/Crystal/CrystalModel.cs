@@ -9,21 +9,21 @@ namespace Clicker.Model
 {
     internal class CrystalModel : ICrystalModel
     {
-        private ICoordinateProcessor _coordinateProcessor;
-        private ICrystalPositionGenerator _crystalPositionGenerator;
-        private IFieldModel _fieldModel;
-        private ApplicationContext _applicationContext;
+        private readonly ICoordinateProcessor _coordinateProcessor;
+        private readonly ICrystalPositionGenerator _crystalPositionGenerator;
+        private readonly IFieldModel _fieldModel;
+        private readonly ApplicationContext _applicationContext;
 
         private ReactiveProperty<ulong> _score = new ReactiveProperty<ulong>(0);
         public IReadOnlyReactiveProperty<ulong> Score => _score;
-
 
         private IReactiveCollection<Vector2> _crystalPositions = new ReactiveCollection<Vector2>();
         public IReadOnlyReactiveCollection<Vector2> CrystalPositions => _crystalPositions;
 
         [Inject]
         private CrystalModel(ICoordinateProcessor coordinateProcessor,
-            ICrystalPositionGenerator crystalPositionGenerator, IFieldModel fieldModel, ApplicationContext applicationContext)
+            ICrystalPositionGenerator crystalPositionGenerator, IFieldModel fieldModel,
+            ApplicationContext applicationContext)
         {
             _coordinateProcessor = coordinateProcessor;
             _crystalPositionGenerator = crystalPositionGenerator;
@@ -71,7 +71,8 @@ namespace Clicker.Model
 
         public void ReleaseTraversedObjects(Vector2 playerChipPosition)
         {
-            var traversedCrystals = _crystalPositions.SelectTraversedObject(playerChipPosition, _applicationContext.ReleaseObjectsOffset);
+            var traversedCrystals =
+                _crystalPositions.SelectTraversedObject(playerChipPosition, _applicationContext.ReleaseObjectsOffset);
             ReleaseObjects(traversedCrystals, _crystalPositions);
         }
 

@@ -11,7 +11,7 @@ namespace Clicker.Model
         private ReactiveProperty<string> _label = new ReactiveProperty<string>();
         public IReadOnlyReactiveProperty<string> Label => _label;
 
-        private ICrystalModel _crystalModel;
+        private readonly ICrystalModel _crystalModel;
 
         [Inject]
         private GameInfoModel(ICrystalModel crystalModel)

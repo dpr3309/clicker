@@ -7,7 +7,7 @@ namespace Clicker.Model
 {
     internal abstract class BaseCrystalPositionGenerator : ICrystalPositionGenerator
     {
-        private ISelector _selector;
+        private readonly ISelector _selector;
 
         protected BaseCrystalPositionGenerator(ISelector selector)
         {
