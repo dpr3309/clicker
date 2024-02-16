@@ -50,5 +50,10 @@ namespace Clicker.Model
         {
             _coordinateModifierManager.ChangeDirection();
         }
+
+        public void Reset()
+        {
+            _coordinateModifierManager.Reset();
+        }
     }
 }

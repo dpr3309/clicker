@@ -28,6 +28,14 @@ namespace Clicker.Model
             return _currentCoordinateModifier.TransformCoordinatesFall(coordinate, modifier);
         }
 
+        public void Reset()
+        {
+            while (index != 0)
+            {
+                ChangeDirection();
+            }
+        }
+
         public void ChangeDirection()
         {
             index = (++index < _coordinateModifiers.Length) ? index : 0;

@@ -51,6 +51,7 @@ namespace Clicker.Model
         public void Restart()
         {
             _position.Value = Vector3.zero;
+            _coordinateProcessor.Reset();
         }
 
         public void Update()

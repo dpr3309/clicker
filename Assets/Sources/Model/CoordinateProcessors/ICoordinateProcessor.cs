@@ -10,5 +10,6 @@ namespace Clicker.Model
         bool PlayerChipCollisionWithOtherObject(Vector2 playerChipPosition, Vector2 crystalInstance);
         void ChangeDirection();
         Vector3 TransformCoordinatesFall(Vector3 playerChipPosition, float speed);
+        void Reset();
     }
 }
