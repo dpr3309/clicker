@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Clicker.Tools;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -13,16 +12,14 @@ namespace Clicker.Model
         private IReactiveCollection<Vector2> _tileInstances = new ReactiveCollection<Vector2>();
         public IReadOnlyReactiveCollection<Vector2> TileInstances => _tileInstances;
         private ITilePositionGenerator _positionGenerator;
+        private ApplicationContext _applicationContext;
 
-
-        // todo: move it to context!
-        private const int MIN_TILES_COUNT = 30;
-        private const float OFFSET = -2.5f;
 
         [Inject]
-        private FieldModel(ITilePositionGenerator positionGenerator)
+        private FieldModel(ITilePositionGenerator positionGenerator, ApplicationContext applicationContext)
         {
             _positionGenerator = positionGenerator;
+            _applicationContext = applicationContext;
         }
 
         public void Startup()
@@ -32,6 +29,7 @@ namespace Clicker.Model
             {
                 _tileInstances.Add(position);
             }
+
             CheckTilesCount();
         }
 
@@ -42,7 +40,8 @@ namespace Clicker.Model
 
         public void ReleaseTraversedObjects(Vector2 playerChipPosition)
         {
-            var traversedTiles = _tileInstances.SelectTraversedObject(playerChipPosition, OFFSET);
+            var traversedTiles =
+                _tileInstances.SelectTraversedObject(playerChipPosition, _applicationContext.ReleaseObjectsOffset);
             ReleaseObjects(traversedTiles, _tileInstances);
         }
 
@@ -54,10 +53,9 @@ namespace Clicker.Model
             }
         }
 
-
         public void CheckTilesCount()
         {
-            if (_tileInstances.Count < MIN_TILES_COUNT)
+            if (_tileInstances.Count < _applicationContext.MinTilesCount)
             {
                 GenerationTiles();
                 CheckTilesCount();

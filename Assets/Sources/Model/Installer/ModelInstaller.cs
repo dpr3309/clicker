@@ -48,6 +48,7 @@ namespace Clicker.Installers
             Container.BindInterfacesTo<CrystalModel>().AsSingle();
             Container.BindInterfacesTo<GameModel>().AsSingle();
             Container.BindInterfacesTo<GameInfoModel>().AsSingle();
+            Container.Bind<ApplicationContext>().AsSingle();
         }
 
         private void InstallGameCoreFSM()

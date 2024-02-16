@@ -9,13 +9,10 @@ namespace Clicker.Model
 {
     internal class CrystalModel : ICrystalModel
     {
-        // todo: move it to context!
-        private const int MIN_CRYSTALS_COUT = 8;
-        private const float OFFSET = -2.5f;
-
         private ICoordinateProcessor _coordinateProcessor;
         private ICrystalPositionGenerator _crystalPositionGenerator;
         private IFieldModel _fieldModel;
+        private ApplicationContext _applicationContext;
 
         private ReactiveProperty<ulong> _score = new ReactiveProperty<ulong>(0);
         public IReadOnlyReactiveProperty<ulong> Score => _score;
@@ -26,11 +23,12 @@ namespace Clicker.Model
 
         [Inject]
         private CrystalModel(ICoordinateProcessor coordinateProcessor,
-            ICrystalPositionGenerator crystalPositionGenerator, IFieldModel fieldModel)
+            ICrystalPositionGenerator crystalPositionGenerator, IFieldModel fieldModel, ApplicationContext applicationContext)
         {
             _coordinateProcessor = coordinateProcessor;
             _crystalPositionGenerator = crystalPositionGenerator;
             _fieldModel = fieldModel;
+            _applicationContext = applicationContext;
         }
 
         public void Startup(Vector2 playerChipPosition)
@@ -73,7 +71,7 @@ namespace Clicker.Model
 
         public void ReleaseTraversedObjects(Vector2 playerChipPosition)
         {
-            var traversedCrystals = _crystalPositions.SelectTraversedObject(playerChipPosition, OFFSET);
+            var traversedCrystals = _crystalPositions.SelectTraversedObject(playerChipPosition, _applicationContext.ReleaseObjectsOffset);
             ReleaseObjects(traversedCrystals, _crystalPositions);
         }
 
@@ -87,7 +85,7 @@ namespace Clicker.Model
 
         private void CheckCrystalsCount(Vector2 playerChipPosition)
         {
-            if (_crystalPositions.Count < MIN_CRYSTALS_COUT)
+            if (_crystalPositions.Count < _applicationContext.MinCrystalsCount)
             {
                 if (GenerationCrystals(playerChipPosition))
                     CheckCrystalsCount(playerChipPosition);
