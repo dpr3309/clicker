@@ -447,7 +447,7 @@ MonoBehaviour:
   coordinateModifierTypes: 0000000001000000
   launchPadSize: {x: 3, y: 3}
   difficaltyLevel: 0
-  crystalPositionGeneratorType: 1
+  crystalPositionGeneratorType: 0
   maxSelectorIterationCount: 5
 --- !u!114 &458493499
 MonoBehaviour:
