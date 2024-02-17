@@ -22,6 +22,7 @@ namespace Clicker.Model
         {
             _coordinateProcessor = coordinateProcessor;
             _applicationContext = applicationContext;
+            UpdatePosition(_applicationContext.PlayerChipStartPosition);
         }
 
         private void UpdatePosition(Vector3 newPosition)
@@ -51,7 +52,7 @@ namespace Clicker.Model
 
         public void Restart()
         {
-            _position.Value = Vector3.zero;
+            UpdatePosition(_applicationContext.PlayerChipStartPosition);
             _coordinateProcessor.Reset();
         }
 
