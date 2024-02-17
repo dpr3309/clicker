@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Clicker.Model
 {
@@ -11,41 +12,19 @@ namespace Clicker.Model
         private readonly Vector2Int _launchPadSize;
         private readonly DifficultyLevel _difficultyLevel;
         private readonly float _tileSize;
-        private readonly ALevelSquareTilePositionGenerator _tilePositionGenerator;
+        private readonly ILevelSquareTilePositionGenerator _tilePositionGenerator;
 
-        public SquareTilePositionGenerator(float tileSize, DifficultyLevel difficultyLevel, Vector2Int launchPadSize)
+        [Inject]
+        private SquareTilePositionGenerator(float tileSize, DifficultyLevel difficultyLevel,
+            Vector2Int launchPadSize, ILevelSquareTilePositionGenerator tilePositionGenerator)
         {
             _difficultyLevel = difficultyLevel;
             _tileSize = tileSize;
             _launchPadSize = launchPadSize;
-
-            _tilePositionGenerator = GenerateTilePositionGenerator(difficultyLevel, tileSize);
+            _tilePositionGenerator = tilePositionGenerator;
         }
 
-        /// <summary>
-        /// factory method, generates tiles position generator taking into account the current level of complexity
-        /// </summary>
-        /// <returns>The tile position generator.</returns>
-        /// <param name="currentDifficultyLevel">Current difficulty level.</param>
-        /// <param name="currentTileSize">Current tile size.</param>
-        private ALevelSquareTilePositionGenerator GenerateTilePositionGenerator(DifficultyLevel currentDifficultyLevel,
-            float currentTileSize)
-        {
-            switch (currentDifficultyLevel)
-            {
-                case DifficultyLevel.High:
-                    return new HighLevelSquareTilePositionGenerator(currentTileSize);
-                case DifficultyLevel.Middle:
-                    return new MiddleLevelSquareTilePositionGenerator(currentTileSize);
-                case DifficultyLevel.Low:
-                    return new LowLevelSquareTilePositionGenerator(currentTileSize);
-                default:
-                    throw new Exception(
-                        $"[SquareTilePositionGenerator.GenerateTilePositionGenerator]unhandled difficulty level: {currentDifficultyLevel}");
-            }
-        }
-
-        public IReadOnlyCollection<Vector2> GenerateLaunchPadPositions()
+        public IReadOnlyCollection<Vector2> GenerateLaunchPadPositions(Vector2 directionModifier)
         {
             Vector2[,] generatedTilePositions = new Vector2[_launchPadSize.x, _launchPadSize.y];
             List<Vector2> result = new List<Vector2>();
@@ -53,7 +32,7 @@ namespace Clicker.Model
             {
                 for (int x = 0; x < _launchPadSize.x; x++)
                 {
-                    generatedTilePositions[x, y] = new Vector2(x * _tileSize, y * _tileSize);
+                    generatedTilePositions[x, y] = new Vector2(x * (_tileSize*directionModifier.x), y * (_tileSize*directionModifier.y));
                     var tilePosition = generatedTilePositions[x, y];
                     result.Add(new Vector2(tilePosition.x, tilePosition.y));
                 }

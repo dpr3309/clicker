@@ -13,17 +13,21 @@ namespace Clicker.Model
         public IReadOnlyReactiveCollection<Vector2> TileInstances => _tileInstances;
         private readonly ITilePositionGenerator _positionGenerator;
         private readonly ApplicationContext _applicationContext;
+        private readonly Vector2Int _directionModifiers;
 
         [Inject]
-        private FieldModel(ITilePositionGenerator positionGenerator, ApplicationContext applicationContext)
+        private FieldModel(ITilePositionGenerator positionGenerator, ApplicationContext applicationContext,
+            Vector2Int directionModifiers)
         {
             _positionGenerator = positionGenerator;
             _applicationContext = applicationContext;
+            _directionModifiers = directionModifiers;
         }
 
         public void Startup()
         {
-            var tilesPositions = _positionGenerator.GenerateLaunchPadPositions().ToList().AsReadOnly();
+            var tilesPositions = _positionGenerator.GenerateLaunchPadPositions(_directionModifiers).ToList()
+                .AsReadOnly();
             foreach (var position in tilesPositions)
             {
                 _tileInstances.Add(position);
@@ -37,7 +41,7 @@ namespace Clicker.Model
             ReleaseObjects(_tileInstances.ToList(), _tileInstances);
         }
 
-        public void ReleaseTraversedObjects(Vector2 playerChipPosition)
+        private void ReleaseTraversedObjects(Vector2 playerChipPosition)
         {
             var traversedTiles =
                 _tileInstances.SelectTraversedObject(playerChipPosition, _applicationContext.ReleaseObjectsOffset);

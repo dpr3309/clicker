@@ -13,8 +13,10 @@ namespace Clicker.Model
         private readonly Vector2Int _generatedAreaSize = new Vector2Int(2, 2);
         protected override Vector2Int GeneratedAreaSize => _generatedAreaSize;
 
-        public MiddleLevelSquareTilePositionGenerator(float tileSize)
-            : base(tileSize)
+        public MiddleLevelSquareTilePositionGenerator(float tileSize,
+            IDirectionPositionGenerator verticalPositionGenerator,
+            IDirectionPositionGenerator horizontalPositionGenerator)
+            : base(tileSize, verticalPositionGenerator, horizontalPositionGenerator)
         {
         }
     }

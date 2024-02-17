@@ -5,6 +5,7 @@ using Clicker.Model;
 using Clicker.Model.FSMComponents;
 using Clicker.Model.FSMComponents.States;
 using Clicker.Tools.SelectionAlgorithms;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
 
@@ -33,6 +34,7 @@ namespace Clicker.Installers
 
         public override void InstallBindings()
         {
+            ValidateCoordinateModifiers(coordinateModifierTypes);
             InstallGameCoreFSM();
 
             InstallCrystalPositionGenerator(crystalPositionGeneratorType);
@@ -40,15 +42,61 @@ namespace Clicker.Installers
             InstallTileCoordinateProcessor(settings.TileType, settings.TileSize);
             InstallCoordinateModifierManager(coordinateModifierTypes);
 
+            GenerateTilePositionGenerator(difficaltyLevel, settings.TileSize, coordinateModifierTypes);
             InstallTilePositionGenerator(settings.TileType, settings.TileSize, difficaltyLevel, launchPadSize);
 
+            Vector2Int directionModifier = GetDirectionModifiers(coordinateModifierTypes);
             Container.BindInterfacesTo<CoordinateProcessor>().AsSingle();
-            Container.BindInterfacesTo<FieldModel>().AsSingle();
+            Container.BindInterfacesTo<FieldModel>().AsSingle().WithArguments(directionModifier);
             Container.BindInterfacesTo<PlayerChipModel>().AsSingle();
             Container.BindInterfacesTo<CrystalModel>().AsSingle();
             Container.BindInterfacesTo<GameModel>().AsSingle();
             Container.BindInterfacesTo<GameInfoModel>().AsSingle();
             Container.Bind<ApplicationContext>().AsSingle();
+        }
+
+        private Vector2Int GetDirectionModifiers(List<CoordinateModifierTypes> coordinateModifiers)
+        {
+            Vector2Int result = Vector2Int.one;
+
+            if (coordinateModifiers.Contains(CoordinateModifierTypes.Left))
+                result.x = -1;
+            if (coordinateModifiers.Contains(CoordinateModifierTypes.Backward))
+                result.y = -1;
+            return result;
+        }
+
+        private void ValidateCoordinateModifiers(List<CoordinateModifierTypes> coordinateModifiers)
+        {
+            if (coordinateModifiers.Count > 2)
+                throw new Exception("[ModelInstaller.ValidateCoordinateModifiers] coordinateModifiers has lot items. Valid is 2 item");
+
+            int result = 0;
+            foreach (var item in coordinateModifiers)
+            {
+                result += IsVertical(item);
+            }
+
+            if (result != 1)
+                throw new Exception(
+                    $"[ModelInstaller.ValidateCoordinateModifiers] not valid coordinateModifiers." +
+                    $" Valid is vertical & horizontal in any order. coordinateModifiers: {JsonConvert.SerializeObject(coordinateModifiers.Select(i=>i.ToString()))}");
+
+            int IsVertical(CoordinateModifierTypes coordinateModifierType)
+            {
+                switch (coordinateModifierType)
+                {
+                    case CoordinateModifierTypes.Backward:
+                    case CoordinateModifierTypes.Forward:
+                        return 1;
+                    case CoordinateModifierTypes.Left:
+                    case CoordinateModifierTypes.Right:
+                        return 0;
+                    default:
+                        throw new Exception(
+                            $"[ModelInstaller.ValidateCoordinateModifiers.IsVertical] unhandled coordinateModifierType: {coordinateModifierType.ToString()}");
+                }
+            }
         }
 
         private void InstallGameCoreFSM()
@@ -110,6 +158,13 @@ namespace Clicker.Installers
                     case CoordinateModifierTypes.Right:
                         coordinateModifiers.Add(new RightCoordinateModifier());
                         break;
+                    case CoordinateModifierTypes.Left:
+                        coordinateModifiers.Add(new LeftCoordinateModifier());
+                        break;
+                    case CoordinateModifierTypes.Backward:
+                        coordinateModifiers.Add(new BackwardCoordinateModifier());
+                        break;
+
                     default:
                         throw new Exception(
                             $"[ModelInstaller.InstallCoordinateModifierManager] unhandled coordinateModifierType : {coordinateModifierType}");
@@ -138,6 +193,60 @@ namespace Clicker.Installers
                 default:
                     throw new Exception(
                         $"[ModelInstaller.InstallTilePositionGenerator] unhandled TileType : {tileType}");
+            }
+        }
+
+        /// <summary>
+        /// factory method, generates tiles position generator taking into account the current level of complexity
+        /// </summary>
+        /// <returns>The tile position generator.</returns>
+        /// <param name="currentDifficultyLevel">Current difficulty level.</param>
+        /// <param name="currentTileSize">Current tile size.</param>
+        private void GenerateTilePositionGenerator(DifficultyLevel currentDifficultyLevel,
+            float currentTileSize, List<CoordinateModifierTypes> coordinateModifiers)
+        {
+            IDirectionPositionGenerator horizontalCoordinateGenerator = null; 
+            IDirectionPositionGenerator verticalCoordinateGenerator = null; 
+            foreach (var item in coordinateModifiers)
+            {
+                switch (item)
+                {
+                    case CoordinateModifierTypes.Right:
+                        horizontalCoordinateGenerator = new RightPositionGenerator();
+                        break;
+                    case CoordinateModifierTypes.Forward:
+                        verticalCoordinateGenerator = new ForwardPositionGenerator();
+                        break;
+                    case CoordinateModifierTypes.Left:
+                        horizontalCoordinateGenerator = new LeftPositionGenerator();
+                        break;
+                    case CoordinateModifierTypes.Backward:
+                        verticalCoordinateGenerator = new BackwardPositionGenerator();
+                        break;
+
+                    default:
+                        throw new Exception(
+                            $"[ModelInstaller.GenerateTilePositionGenerator] unhandled CoordinateModifierType: {item.ToString()}");
+                }
+            }
+
+            switch (currentDifficultyLevel)
+            {
+                case DifficultyLevel.High:
+                    Container.BindInterfacesTo<HighLevelSquareTilePositionGenerator>().AsSingle()
+                        .WithArguments(currentTileSize, verticalCoordinateGenerator, horizontalCoordinateGenerator);
+                break;
+                case DifficultyLevel.Middle:
+                    Container.BindInterfacesTo<MiddleLevelSquareTilePositionGenerator>().AsSingle()
+                        .WithArguments(currentTileSize, verticalCoordinateGenerator, horizontalCoordinateGenerator);
+                break;
+                case DifficultyLevel.Low:
+                    Container.BindInterfacesTo<LowLevelSquareTilePositionGenerator>().AsSingle()
+                        .WithArguments(currentTileSize, verticalCoordinateGenerator, horizontalCoordinateGenerator);
+                    break;
+                default:
+                    throw new Exception(
+                        $"[SquareTilePositionGenerator.GenerateTilePositionGenerator]unhandled difficulty level: {currentDifficultyLevel}");
             }
         }
 

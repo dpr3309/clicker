@@ -4,6 +4,7 @@ namespace Clicker.Installers
     {
         Forward,
         Right,
-        Left
+        Left,
+        Backward
     }
 }

@@ -5,18 +5,24 @@ using UnityEngine;
 
 namespace Clicker.Model
 {
-    internal abstract class ALevelSquareTilePositionGenerator
+    internal abstract class ALevelSquareTilePositionGenerator : ILevelSquareTilePositionGenerator
     {
         private readonly float _tileSize;
+        private readonly IDirectionPositionGenerator _verticalPositionGenerator;
+        private readonly IDirectionPositionGenerator _horizontalPositionGenerator;
 
         protected abstract Vector2Int[] TopFaceCellIndices { get; }
         protected abstract Vector2Int[] RightFaceCellIndices { get; }
 
         protected abstract Vector2Int GeneratedAreaSize { get; }
 
-        protected ALevelSquareTilePositionGenerator(float tileSize)
+        protected ALevelSquareTilePositionGenerator(float tileSize,
+            IDirectionPositionGenerator verticalPositionGenerator,
+            IDirectionPositionGenerator horizontalPositionGenerator)
         {
             _tileSize = tileSize;
+            _verticalPositionGenerator = verticalPositionGenerator;
+            _horizontalPositionGenerator = horizontalPositionGenerator;
         }
 
         public Dictionary<FaceDirections, Vector2[]> GenerateExtremeCellPositions(Vector2[,] generatedTilePositions)
@@ -24,11 +30,11 @@ namespace Clicker.Model
             return new Dictionary<FaceDirections, Vector2[]>
             {
                 {
-                    FaceDirections.Top,
+                    FaceDirections.Vertical,
                     TopFaceCellIndices.Select(index => generatedTilePositions[index.x, index.y]).ToArray()
                 },
                 {
-                    FaceDirections.Right,
+                    FaceDirections.Horizontal,
                     RightFaceCellIndices.Select(index => generatedTilePositions[index.x, index.y]).ToArray()
                 }
             };
@@ -45,35 +51,13 @@ namespace Clicker.Model
             Vector2[] extremeCellPositionItems = extremeCellPositions[extremeFace];
             switch (extremeFace)
             {
-                case FaceDirections.Top:
-                    // next tiles on top
-                    for (int y = 0; y < GeneratedAreaSize.y; y++)
-                    {
-                        var yAxisExtremeCellPositionItems = extremeCellPositionItems[y];
-                        for (int x = 0; x < GeneratedAreaSize.x; x++)
-                        {
-                            var xAxisExtremeCellPositionItems = extremeCellPositionItems[x];
-                            var tilePosition = new Vector2(xAxisExtremeCellPositionItems.x,
-                                yAxisExtremeCellPositionItems.y + _tileSize * (y + 1));
-                            result[x, y] = tilePosition;
-                        }
-                    }
-
+                case FaceDirections.Vertical:
+                    result = _verticalPositionGenerator.GenerateTilePositions(GeneratedAreaSize,
+                        extremeCellPositionItems, _tileSize);
                     break;
-                case FaceDirections.Right:
-                    // next tiles from side
-                    for (int y = 0; y < GeneratedAreaSize.y; y++)
-                    {
-                        var yAxisExtremeCellPositionItems = extremeCellPositionItems[y];
-                        for (int x = 0; x < GeneratedAreaSize.x; x++)
-                        {
-                            var xAxisExtremeCellPositionItems = extremeCellPositionItems[x];
-                            var tilePosition = new Vector2(xAxisExtremeCellPositionItems.x + _tileSize * (x + 1),
-                                yAxisExtremeCellPositionItems.y);
-                            result[x, y] = tilePosition;
-                        }
-                    }
-
+                case FaceDirections.Horizontal:
+                    result = _horizontalPositionGenerator.GenerateTilePositions(GeneratedAreaSize,
+                        extremeCellPositionItems, _tileSize);
                     break;
 
                 default:

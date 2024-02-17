@@ -2,7 +2,7 @@ namespace Clicker.Model
 {
     internal enum FaceDirections
     {
-        Top,    //top face
-        Right   //right face
+        Vertical,    //top/bottom face
+        Horizontal   //right/left face
     }
 }

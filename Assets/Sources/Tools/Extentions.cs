@@ -18,7 +18,7 @@ namespace Clicker.Tools
             Vector2 playerChipCoordinates, float offset)
         {
             return instances
-                .Where(i => i.x < playerChipCoordinates.x + offset || i.y < playerChipCoordinates.y + offset)
+                .Where(i => Mathf.Abs(i.x) + offset < Mathf.Abs(playerChipCoordinates.x) || Mathf.Abs(i.y) + offset < Mathf.Abs(playerChipCoordinates.y))
                 .ToList();
         }
 
@@ -26,7 +26,7 @@ namespace Clicker.Tools
             Vector2 playerChipCoordinates, float offset = 0)
         {
             return instances
-                .Where(i => i.x < playerChipCoordinates.x + offset || i.y < playerChipCoordinates.y + offset)
+                .Where(i => Mathf.Abs(i.x) + offset < Mathf.Abs(playerChipCoordinates.x) || Mathf.Abs(i.y) + offset < Mathf.Abs(playerChipCoordinates.y))
                 .ToList();
         }
 
