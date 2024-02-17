@@ -20,16 +20,12 @@ namespace Clicker.View
 
         private void Start()
         {
-            _fieldViewModel.TileInstances.ObserveAdd().Subscribe(pos => _floorFactory.GenerateItemInPosition(pos.Value));
+            _fieldViewModel.TileInstances.ObserveAdd()
+                .Subscribe(pos => _floorFactory.GenerateItemInPosition(pos.Value));
             _fieldViewModel.TileInstances.ObserveRemove().Subscribe(pos =>
             {
                 _floorFactory.OnItemRemoved(_fieldViewModel.TileInstances);
             });
-        }
-
-        private void OnDestroy()
-        {
-            //??? unsubscribe ???
         }
     }
 }

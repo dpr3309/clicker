@@ -9,7 +9,7 @@ namespace Clicker.Tools
         [SerializeField]
         private float smooth = 0.5f;
 
-        private Vector3 offset;
+        private Vector3 _offset;
 
         private Transform _playerViewTransform = null;
 
@@ -21,13 +21,13 @@ namespace Clicker.Tools
 
         private void Start()
         {
-            offset = transform.position - _playerViewTransform.position;
+            _offset = transform.position - _playerViewTransform.position;
         }
 
         private void LateUpdate()
         {
             var newPosition = Vector3.Lerp(transform.position,
-                new Vector3(_playerViewTransform.position.x, 0, _playerViewTransform.position.z) + offset, smooth);
+                new Vector3(_playerViewTransform.position.x, 0, _playerViewTransform.position.z) + _offset, smooth);
             transform.position = newPosition;
         }
     }

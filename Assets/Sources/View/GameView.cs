@@ -1,4 +1,3 @@
-using System;
 using Clicker.ViewModel;
 using UnityEngine;
 using Zenject;
@@ -26,4 +25,3 @@ namespace Clicker.View
         }
     }
 }
-

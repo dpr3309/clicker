@@ -6,7 +6,7 @@ namespace Clicker.Factories
 {
     public class FloorFactory : MonoBehaviour
     {
-        [SerializeField] 
+        [SerializeField]
         private ParticleSystem floorParticle;
 
         public void GenerateItemInPosition(Vector2 position)
