@@ -6,7 +6,7 @@ namespace Clicker.ViewModel
 {
     internal class GameInfoViewModel : IGameInfoViewModel
     {
-        private IGameInfoModel _gameInfoModel;
+        private readonly IGameInfoModel _gameInfoModel;
         public IReadOnlyReactiveProperty<string> Label => _gameInfoModel.Label;
 
         [Inject]

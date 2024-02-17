@@ -7,7 +7,7 @@ namespace Clicker.ViewModel
 {
     public class CrystalViewModel : ICrystalViewModel
     {
-        private ICrystalModel _crystalModel;
+        private readonly ICrystalModel _crystalModel;
         public IReadOnlyReactiveCollection<Vector2> CrystalPositions => _crystalModel.CrystalPositions;
 
         [Inject]

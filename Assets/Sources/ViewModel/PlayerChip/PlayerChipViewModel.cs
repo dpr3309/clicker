@@ -7,7 +7,7 @@ namespace Clicker.ViewModel
 {
     public class PlayerChipViewModel : IPlayerChipViewModel
     {
-        private IPlayerChipModel _playerChipModel;
+        private readonly IPlayerChipModel _playerChipModel;
 
         public IReadOnlyReactiveProperty<Vector3> Position => _playerChipModel.Position;
 

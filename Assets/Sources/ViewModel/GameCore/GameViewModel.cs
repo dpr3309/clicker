@@ -5,7 +5,7 @@ namespace Clicker.ViewModel
 {
     public class GameViewModel : IGameViewModel
     {
-        private IGameStateMachine _fsm;
+        private readonly IGameStateMachine _fsm;
 
         [Inject]
         private GameViewModel(IGameStateMachine fsm)

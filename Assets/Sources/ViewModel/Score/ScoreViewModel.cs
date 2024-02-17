@@ -6,7 +6,7 @@ namespace Clicker.ViewModel
 {
     internal class ScoreViewModel : IScoreViewModel
     {
-        private ICrystalModel _crystalModel;
+        private readonly ICrystalModel _crystalModel;
         public IReadOnlyReactiveProperty<ulong> Score => _crystalModel.Score;
 
         [Inject]
