@@ -15,7 +15,6 @@ namespace Clicker.Tools
         {
             T item = GameObject.Instantiate(origin, origin.transform.parent) as T;
             item.transform.localPosition = Vector3.zero;
-            item.transform.localScale = Vector3.one;
             item.gameObject.SetActive(setAcitve);
             return item;
         }
