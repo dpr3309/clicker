@@ -22,8 +22,7 @@ namespace Clicker.Tools
 
         public T GetObject()
         {
-            T item;
-            if (pool.TryTake(out item))
+            if (pool.TryTake(out var item))
                 return item;
             return objectGenerator();
         }
