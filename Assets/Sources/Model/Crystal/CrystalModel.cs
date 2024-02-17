@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Clicker.Tools;
+using Clicker.Model.Tools;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -72,7 +72,7 @@ namespace Clicker.Model
         public void ReleaseTraversedObjects(Vector2 playerChipPosition)
         {
             var traversedCrystals =
-                _crystalPositions.SelectTraversedObject(playerChipPosition, _applicationContext.ReleaseObjectsOffset);
+                CrystalPositions.SelectTraversedObject(playerChipPosition, _applicationContext.ReleaseObjectsOffset);
             ReleaseObjects(traversedCrystals, _crystalPositions);
         }
 
@@ -95,11 +95,13 @@ namespace Clicker.Model
 
         private bool GenerationCrystals(Vector2 playerChipPosition)
         {
-            var notAvailablePositions = _fieldModel.TileInstances.SelectTraversedObject(playerChipPosition);
+            var notAvailablePositions = _fieldModel.TileInstances.SelectTraversedObject(playerChipPosition, _applicationContext.ReleaseObjectsOffset);
             notAvailablePositions.Add(playerChipPosition);
+            var playerPositionNeighbourhood = playerChipPosition.GetNeighbourhood(2);
+            notAvailablePositions.AddRange(playerPositionNeighbourhood);
 
-            var availablePositions = _fieldModel.TileInstances.Except(_crystalPositions).Except(notAvailablePositions)
-                .ToList();
+             var availablePositions = _fieldModel.TileInstances.Except(_crystalPositions).Except(notAvailablePositions)
+                 .ToList();
 
             if (!availablePositions.Any())
                 return false;

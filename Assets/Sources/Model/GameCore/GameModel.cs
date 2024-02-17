@@ -85,10 +85,12 @@ namespace Clicker.Model
 
         private void ProcessPlayerPosition(Vector2 playerChipPosition)
         {
-            if (_coordinateProcessor.CoordinatesAreWithinTiles(playerChipPosition, _fieldModel.TileInstances))
+            (bool onTheTile, Vector2 tileWithPlayer) =
+                _coordinateProcessor.CoordinatesAreWithinTiles(playerChipPosition, _fieldModel.TileInstances);
+            if (onTheTile)
             {
-                _fieldModel.ProcessPlayerPosition(playerChipPosition);
-                _crystalModel.ProcessPlayerPosition(playerChipPosition);
+                _fieldModel.ProcessPlayerPosition(tileWithPlayer);
+                _crystalModel.ProcessPlayerPosition(tileWithPlayer);
             }
             else
             {

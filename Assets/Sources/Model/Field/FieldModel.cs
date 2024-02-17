@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Clicker.Tools;
+using Clicker.Model.Tools;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -44,7 +44,7 @@ namespace Clicker.Model
         private void ReleaseTraversedObjects(Vector2 playerChipPosition)
         {
             var traversedTiles =
-                _tileInstances.SelectTraversedObject(playerChipPosition, _applicationContext.ReleaseObjectsOffset);
+                TileInstances.SelectTraversedObject(playerChipPosition, _applicationContext.ReleaseObjectsOffset);
             ReleaseObjects(traversedTiles, _tileInstances);
         }
 

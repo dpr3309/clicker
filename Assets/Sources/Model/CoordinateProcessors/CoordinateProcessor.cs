@@ -30,15 +30,15 @@ namespace Clicker.Model
             return _coordinateModifierManager.TransformCoordinatesFall(playerChipPosition, modifier);
         }
 
-        public bool CoordinatesAreWithinTiles(Vector2 playerChipPosition, IEnumerable<Vector2> tilesCoordinates)
+        public (bool, Vector2) CoordinatesAreWithinTiles(Vector2 playerChipPosition, IEnumerable<Vector2> tilesCoordinates)
         {
             foreach (var tileCenterCoordinate in tilesCoordinates)
             {
                 if (_tileCoordinateProcessor.ContainsCoordinates(tileCenterCoordinate, playerChipPosition))
-                    return true;
+                    return (true, tileCenterCoordinate);
             }
 
-            return false;
+            return (false, default);
         }
 
         public bool PlayerChipCollisionWithOtherObject(Vector2 playerChipPosition, Vector2 otherObjectCoordinate)
