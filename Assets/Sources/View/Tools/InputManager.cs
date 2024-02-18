@@ -20,8 +20,10 @@ namespace Clicker.Tools
 
         private void Start()
         {
+#if UNITY_EDITOR
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => _gameViewModel.Click());
+#endif
         }
 
         private void Update()
@@ -30,6 +32,13 @@ namespace Clicker.Tools
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _gameViewModel.Click();
+            }
+#elif UNITY_ANDROID && !UNITY_EDITOR
+            if (Input.touchCount == 1)
+            {
+                var tough = Input.GetTouch(0);
+                if(tough.phase == TouchPhase.Began)
+                    _gameViewModel.Click();
             }
 #endif
         }
