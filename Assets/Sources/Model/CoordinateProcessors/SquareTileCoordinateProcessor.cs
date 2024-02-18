@@ -1,5 +1,6 @@
 using Clicker.Tools;
 using UnityEngine;
+using Zenject;
 
 namespace Clicker.Model
 {
@@ -8,7 +9,8 @@ namespace Clicker.Model
         private readonly float _halfTileSize;
         private readonly double _tileArea;
 
-        public SquareTileCoordinateProcessor(float tileSize)
+        [Inject]
+        private SquareTileCoordinateProcessor(float tileSize)
         {
             _halfTileSize = tileSize / 2f;
             _tileArea = GeometricCalculator.CalculateAreaOfSquare(tileSize);

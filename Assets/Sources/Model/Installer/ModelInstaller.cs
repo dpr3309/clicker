@@ -29,7 +29,7 @@ namespace Clicker.Installers
         private int maxSelectorIterationCount = 5;
 
 
-        private GameSettings settings = new GameSettings(TileType.Square, 1, PlayerChipType.Circle, 0.5f);
+        private GameSettings settings = new GameSettings(TileType.Square, 1.0f, PlayerChipType.Circle, 0.5f);
 
         public override void InstallBindings()
         {

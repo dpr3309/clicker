@@ -64,7 +64,7 @@ namespace Clicker.Tools
             var areaOfTriangle3 = CalculateAreaOfTriangle(c, d, coordinatesPoint);
             var areaOfTriangle4 = CalculateAreaOfTriangle(a, d, coordinatesPoint);
 
-            return Math.Abs(areaOfTriangle1 + areaOfTriangle2 + areaOfTriangle3 + areaOfTriangle4 - squareArea) < 1e-5;
+            return Math.Abs(areaOfTriangle1 + areaOfTriangle2 + areaOfTriangle3 + areaOfTriangle4 - squareArea) < 1e-2;
         }
 
         /// <summary>
