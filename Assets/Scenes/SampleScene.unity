@@ -446,9 +446,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coordinateModifierTypes: 0000000001000000
   launchPadSize: {x: 3, y: 3}
-  difficaltyLevel: 0
-  crystalPositionGeneratorType: 0
-  maxSelectorIterationCount: 5
+  difficaltyLevel: 1
+  crystalPositionGeneratorType: 1
+  maxSelectorIterationCount: 3
 --- !u!114 &458493499
 MonoBehaviour:
   m_ObjectHideFlags: 0
