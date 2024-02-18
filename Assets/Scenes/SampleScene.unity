@@ -448,7 +448,7 @@ MonoBehaviour:
   launchPadSize: {x: 3, y: 3}
   difficaltyLevel: 1
   crystalPositionGeneratorType: 1
-  maxSelectorIterationCount: 3
+  maxSelectorIterationCount: 5
 --- !u!114 &458493499
 MonoBehaviour:
   m_ObjectHideFlags: 0
