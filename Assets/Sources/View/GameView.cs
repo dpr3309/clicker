@@ -17,6 +17,7 @@ namespace Clicker.View
         private void Start()
         {
             _gameViewModel.Startup();
+            Screen.sleepTimeout = int.MaxValue;
         }
 
         void Update()

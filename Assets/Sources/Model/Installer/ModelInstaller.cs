@@ -5,7 +5,6 @@ using Clicker.Model;
 using Clicker.Model.FSMComponents;
 using Clicker.Model.FSMComponents.States;
 using Clicker.Tools.SelectionAlgorithms;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
 
@@ -72,7 +71,7 @@ namespace Clicker.Installers
             if (result != 1)
                 throw new Exception(
                     $"[ModelInstaller.ValidateCoordinateModifiers] not valid coordinateModifiers." +
-                    $" Valid is vertical & horizontal in any order. coordinateModifiers: {JsonConvert.SerializeObject(coordinateModifiers.Select(i => i.ToString()))}");
+                    $" Valid is vertical & horizontal in any order. coordinateModifiers: {string.Join(';',coordinateModifiers.Select(i => i.ToString()))}");
 
             int IsVertical(CoordinateModifierTypes coordinateModifierType)
             {
